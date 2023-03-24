@@ -48,7 +48,7 @@ K = zeros(2,N_Fc);
             % Get connectivity vector
             Connectivity = squeeze(mean(connectivity_matrices(p1,:,:), 'omitnan')); 
 
-            % Prepare table for LMME
+            % Prepare table for LMM
             Table = table(SubjRecs, RecAges, Connectivity);
 
             % Perform first or second order LMM
