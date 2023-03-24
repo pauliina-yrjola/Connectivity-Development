@@ -55,7 +55,7 @@ K = zeros(2,N_Fc);
                 % Get connectivity vector
                 Connectivity = squeeze(connectivity_matrices(p1,p2,:));
 
-                % Prepare table for LMM
+                % Prepare table for LMME
                 Table = table(SubjRecs, RecAges, Connectivity);
 
                 % Perform first or second order LMM
@@ -69,7 +69,7 @@ K = zeros(2,N_Fc);
                 elseif LMM_order == 2
                     % Second order LMM
                     lmm_buf = fitlme(Table, 'Connectivity ~ 1 + RecAges + RecAges^2 + (1 + RecAges | SubjRecs)');
-                    p_buf = lmm_buf.Coefficients.pValue(3);
+                    p_buf = lmm_buf.Coefficients.pValue(3);  
                     r2_adj_buf = lmm_buf.Rsquared.Adjusted;
                     BIC_buf = lmm_buf.ModelCriterion.BIC;
                 else
@@ -87,7 +87,7 @@ K = zeros(2,N_Fc);
                 BIC{1,f}(p2,p1) = BIC_buf;
                 BIC{1,f}(p1,p1) = NaN;
                 
-                if LMM_order == 1
+                if LMM_order == 1                    
                     r{1,f}(p1,p2) = r_buf;
                     r{1,f}(p2,p1) = r_buf;
                     r{1,f}(p1,p1) = NaN;
@@ -98,14 +98,14 @@ K = zeros(2,N_Fc);
                 clear lmm_buf p_buf r2_adj_buf BIC_buf
 
             end
-        end
+        end              
         
         % Update last element to NaN
         p{1,f}(N_parcels,N_parcels) = NaN;
         r2_adj{1,f}(N_parcels,N_parcels) = NaN;
         BIC{1,f}(N_parcels,N_parcels) = NaN;
         
-        if LMM_order == 1
+        if LMM_order == 1                       
             r{1,f}(N_parcels,N_parcels) = NaN;
         end
 
@@ -124,5 +124,3 @@ K = zeros(2,N_Fc);
     end
     
 end
-
-
